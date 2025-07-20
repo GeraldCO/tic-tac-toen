@@ -14,7 +14,7 @@ const cell = ()=>{
     const setMark = (player) => {
         this.player = player;
         this.isMarked = true;
-        this.mark = player.getMark();
+        this.mark = player.getPlayerMark();
     }
     
     return {
@@ -27,10 +27,10 @@ const player = (playerName, mark) => {
     this.mark = mark
 
     const getPlayerName = () => this.playerName
-    const getPlayerMakr = () => this.mark
+    const getPlayerMark = () => this.mark
 
     return {
-        getPlayerMakr, getPlayerName
+        getPlayerMark, getPlayerName
     }
 }
 
@@ -46,10 +46,15 @@ const gameBoard = () => {
         }
     }
 
-    const getBoard = () => board;
+    const getBoard = () => {
+        console.log(board);
+    }
+    const setMark = (row, column, player) => {
+        board[row][column].cell.setMark(player.getPlayerMark())
+    }
 
     return{
-        getBoard, 
+        getBoard, setMark
     }
     
 }
@@ -64,40 +69,71 @@ const gameController = (
         player(playerTwoName, "O")
     ]
     let activePlayer = players[0];
-    let winner
+    let winner;
+    let isItTight;
+    let rounds = 0
 
-    const switchPlayer = () => {
+    const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
     }
 
     const getActivePlayer = () => activePlayer;
+    
     const printNewRound = () => {
-        console.log(`it is ${getActivePlayer().name}'s turn`);
+        console.log(`it is ${getActivePlayer().getPlayerName()}'s turn`);
+        switchPlayerTurn(); 
+
     }
 
     const playRound = () => {
-        
+        let row, column
+        while(!winner || rounds < 9){
+            
+            console.log("rounds" + rounds)
+            board.getBoard();
+            row =  0 //prompt("select row");
+            column = 1  //prompt("select column")
+            //.setMark(row, column, players[0] );
+            if(board){
+                console.log(board.getBoard()[0][1].setMark("gato"));
+
+                
+            }
+            rounds = rounds++;
+            console.log("round done, checking winner");
+            checkWinner();
+            printNewRound();
+        }
     }
 
     const checkWinner = () => {
         if(
             //rows
-            board[0][0] === board[0][1] === board[0][2] ||
-            board[1][0] === board[1][1] === board[1][2] ||
-            board[2][0] === board[2][1] === board[2][2] ||
+            board[0][0].cell.getMark() === board[0][1].cell.getMark() === board[0][2].cell.getMark() ||
+            board[1][0].cell.getMark() === board[1][1].cell.getMark() === board[1][2].cell.getMark() ||
+            board[2][0].cell.getMark() === board[2][1].cell.getMark() === board[2][2].cell.getMark() ||
             //columns
-            board[0][0] === board[1][0] === board[2][0] ||
-            board[0][1] === board[1][1] === board[2][1] ||
-            board[0][2] === board[1][2] === board[2][2] ||
+            board[0][0].cell.getMark() === board[1][0].cell.getMark() === board[2][0].cell.getMark() ||
+            board[0][1].cell.getMark() === board[1][1].cell.getMark() === board[2][1].cell.getMark() ||
+            board[0][2].cell.getMark() === board[1][2].cell.getMark() === board[2][2].cell.getMark() ||
             //diagonals
-            board[0][0] === board[1][1] === board[2][2] ||
-            board[2][0] === board[1][1] === board[0][2] 
+            board[0][0].cell.getMark() === board[1][1].cell.getMark() === board[2][2].cell.getMark() ||
+            board[2][0].cell.getMark() === board[1][1].cell.getMark() === board[0][2].cell.getMark() 
         ){
             winner = getActivePlayer()
             console.log(`the winner is ${getActivePlayer.name}`)
         }
     }
 
-
+    return {
+        playRound,
+        getActivePlayer, 
+        players
+    }
 }
+
+const game = gameController();
+
+game.playRound()
+
 
