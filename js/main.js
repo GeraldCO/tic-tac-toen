@@ -1,20 +1,20 @@
 const cell = ()=>{
     let player = {};
     let isMarked = false;
-    let mark = "";
+    let mark = "empty";
     
     const getMark = () =>{
         return {
-           player: this.player,
-           isMarked: this.isMarked,
-           mark: this.mark
+           player: player,
+           isMarked: isMarked,
+           mark: mark
         }
     }
 
-    const setMark = (player) => {
-        this.player = player;
-        this.isMarked = true;
-        this.mark = player.getPlayerMark();
+    const setMark = (newPlayer) => {
+        player = newPlayer;
+        isMarked = true;
+        mark = newPlayer.getPlayerMark();
     }
     
     return {
@@ -42,13 +42,11 @@ const gameBoard = () => {
     for(let i=0; i < rows; i++){
         board[i] = []
         for(let j=0; j<columns; j++){
-            board[i].push(cell);
+            board[i].push(cell());
         }
     }
 
-    const getBoard = () => {
-        console.log(board);
-    }
+    const getBoard = () => board
     const setMark = (row, column, player) => {
         board[row][column].cell.setMark(player.getPlayerMark())
     }
@@ -85,20 +83,26 @@ const gameController = (
 
     }
 
+    const printBoard = () => {
+        let consoleBoard = "\n"
+        for(let i= 0; i<3; i++){
+            for(let j=0; j<3; j++){
+                consoleBoard = consoleBoard + board.getBoard()[i][j].getMark().mark + " ";
+            }
+            consoleBoard = consoleBoard + "\n";
+        }
+        console.log(consoleBoard)
+    }
+
     const playRound = () => {
         let row, column
         while(!winner || rounds < 9){
             
             console.log("rounds" + rounds)
-            board.getBoard();
+            printBoard();
             row =  0 //prompt("select row");
             column = 1  //prompt("select column")
             //.setMark(row, column, players[0] );
-            if(board){
-                console.log(board.getBoard()[0][1].setMark("gato"));
-
-                
-            }
             rounds = rounds++;
             console.log("round done, checking winner");
             checkWinner();
@@ -109,16 +113,17 @@ const gameController = (
     const checkWinner = () => {
         if(
             //rows
-            board[0][0].cell.getMark() === board[0][1].cell.getMark() === board[0][2].cell.getMark() ||
-            board[1][0].cell.getMark() === board[1][1].cell.getMark() === board[1][2].cell.getMark() ||
-            board[2][0].cell.getMark() === board[2][1].cell.getMark() === board[2][2].cell.getMark() ||
+            
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[0][1].getMark().mark ===board.getBoard()[0][2].getMark().mark ||
+            board.getBoard()[1][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[1][2].getMark().mark ||
+            board.getBoard()[2][0].getMark().mark === board.getBoard()[2][1].getMark().mark === board.getBoard()[2][2].getMark().mark ||
             //columns
-            board[0][0].cell.getMark() === board[1][0].cell.getMark() === board[2][0].cell.getMark() ||
-            board[0][1].cell.getMark() === board[1][1].cell.getMark() === board[2][1].cell.getMark() ||
-            board[0][2].cell.getMark() === board[1][2].cell.getMark() === board[2][2].cell.getMark() ||
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][0].getMark().mark === board.getBoard()[2][0].getMark().mark ||
+            board.getBoard()[0][1].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[2][1].getMark().mark ||
+            board.getBoard()[0][2].getMark().mark === board.getBoard()[1][2].getMark().mark === board.getBoard()[2][2].getMark().mark ||
             //diagonals
-            board[0][0].cell.getMark() === board[1][1].cell.getMark() === board[2][2].cell.getMark() ||
-            board[2][0].cell.getMark() === board[1][1].cell.getMark() === board[0][2].cell.getMark() 
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[2][2].getMark().mark ||
+            board.getBoard()[2][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[0][2].getMark().mark 
         ){
             winner = getActivePlayer()
             console.log(`the winner is ${getActivePlayer.name}`)
