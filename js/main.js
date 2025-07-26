@@ -51,17 +51,32 @@ const gameController = () => {
 
     const checkWinner = () => {
         if(
-            //rows
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[0][1].getMark().mark === board.getBoard()[0][2].getMark().mark ||
-            board.getBoard()[1][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[1][2].getMark().mark ||
-            board.getBoard()[2][0].getMark().mark === board.getBoard()[2][1].getMark().mark === board.getBoard()[2][2].getMark().mark ||
+            //rows 
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[0][1].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[0][2].getMark().mark &&
+            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[0][1].getMark().isMarked && board.getBoard()[0][2].getMark().isMarked
+            ||
+            board.getBoard()[1][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[1][0].getMark().mark === board.getBoard()[1][2].getMark().mark &&
+            board.getBoard()[1][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[1][2].getMark().isMarked
+            ||
+            board.getBoard()[2][0].getMark().mark === board.getBoard()[2][1].getMark().mark && board.getBoard()[2][0].getMark().mark === board.getBoard()[2][2].getMark().mark &&
+            board.getBoard()[2][0].getMark().isMarked && board.getBoard()[2][1].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            ||
             //columns
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][0].getMark().mark === board.getBoard()[2][0].getMark().mark ||
-            board.getBoard()[0][1].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[2][1].getMark().mark ||
-            board.getBoard()[0][2].getMark().mark === board.getBoard()[1][2].getMark().mark === board.getBoard()[2][2].getMark().mark ||
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][0].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[2][0].getMark().mark &&
+            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[1][0].getMark().isMarked && board.getBoard()[2][0].getMark().isMarked
+            ||
+            board.getBoard()[0][1].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[0][1].getMark().mark === board.getBoard()[2][1].getMark().mark &&
+            board.getBoard()[0][1].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][1].getMark().isMarked
+            ||
+            board.getBoard()[0][2].getMark().mark === board.getBoard()[1][2].getMark().mark && board.getBoard()[0][2].getMark().mark === board.getBoard()[2][2].getMark().mark &&
+            board.getBoard()[0][2].getMark().isMarked && board.getBoard()[1][2].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            ||
             //diagonals
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[2][2].getMark().mark ||
-            board.getBoard()[2][0].getMark().mark === board.getBoard()[1][1].getMark().mark === board.getBoard()[0][2].getMark().mark 
+            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[2][2].getMark().mark &&
+            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            ||
+            board.getBoard()[2][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[2][0].getMark().mark === board.getBoard()[0][2].getMark().mark &&
+            board.getBoard()[2][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][0].getMark().isMarked
         ){
             winner = getActivePlayer()
             console.log(`the winner is ${getActivePlayer().getPlayerName()}`)
@@ -78,5 +93,3 @@ const gameController = () => {
 const game = gameController();
 
 game.playRound()
-
-
