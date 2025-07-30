@@ -49,34 +49,33 @@ const gameController = () => {
         }
     }
 
+    const compareCell = (row1, col1, row2, col2, row3, col3) => {
+        if(board.getBoard()[row1][col1].getMark().mark === board.getBoard()[row2][col2].getMark().mark && board.getBoard()[row1][col1].getMark().mark === board.getBoard()[row3][col3].getMark().mark &&
+            board.getBoard()[row1][col1].getMark().isMarked && board.getBoard()[row2][col2].getMark().isMarked && board.getBoard()[row3][col3].getMark().isMarked){
+                return true
+            }
+    }
+
     const checkWinner = () => {
         if(
-            //rows 
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[0][1].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[0][2].getMark().mark &&
-            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[0][1].getMark().isMarked && board.getBoard()[0][2].getMark().isMarked
+            //rows
+            compareCell(0,0,0,1,0,2)
             ||
-            board.getBoard()[1][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[1][0].getMark().mark === board.getBoard()[1][2].getMark().mark &&
-            board.getBoard()[1][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[1][2].getMark().isMarked
+            compareCell(1,0,1,1,1,2)
             ||
-            board.getBoard()[2][0].getMark().mark === board.getBoard()[2][1].getMark().mark && board.getBoard()[2][0].getMark().mark === board.getBoard()[2][2].getMark().mark &&
-            board.getBoard()[2][0].getMark().isMarked && board.getBoard()[2][1].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            compareCell(2,0,2,1,2,2)
             ||
             //columns
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][0].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[2][0].getMark().mark &&
-            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[1][0].getMark().isMarked && board.getBoard()[2][0].getMark().isMarked
+            compareCell(0,0,1,0,2,0)
             ||
-            board.getBoard()[0][1].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[0][1].getMark().mark === board.getBoard()[2][1].getMark().mark &&
-            board.getBoard()[0][1].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][1].getMark().isMarked
+            compareCell(0,1,1,1,2,1)
             ||
-            board.getBoard()[0][2].getMark().mark === board.getBoard()[1][2].getMark().mark && board.getBoard()[0][2].getMark().mark === board.getBoard()[2][2].getMark().mark &&
-            board.getBoard()[0][2].getMark().isMarked && board.getBoard()[1][2].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            compareCell(0,2,1,2,2,2)
             ||
             //diagonals
-            board.getBoard()[0][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[0][0].getMark().mark === board.getBoard()[2][2].getMark().mark &&
-            board.getBoard()[0][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][2].getMark().isMarked
+            compareCell(0,0,1,1,2,2)
             ||
-            board.getBoard()[2][0].getMark().mark === board.getBoard()[1][1].getMark().mark && board.getBoard()[2][0].getMark().mark === board.getBoard()[0][2].getMark().mark &&
-            board.getBoard()[2][0].getMark().isMarked && board.getBoard()[1][1].getMark().isMarked && board.getBoard()[2][0].getMark().isMarked
+            compareCell(2,0,1,1,2,0)
         ){
             winner = getActivePlayer()
             console.log(`the winner is ${getActivePlayer().getPlayerName()}`)
