@@ -91,4 +91,28 @@ const gameController = () => {
 
 const game = gameController();
 
-game.playRound()
+var renderGameBoard = (function(){
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    const board = [];
+
+    return{
+        render: function(){
+            const gameBoard = document.querySelector("#gameboard");
+                for(let i=0; i<3; i++){
+                    board[i] = []
+                    for(let j=0; j<3; j++){
+                        board[i].push(cell);
+                        const clonedElement = cell.cloneNode(true);
+                        gameBoard.appendChild(clonedElement);
+                        console.log("appending");
+                }
+            }
+            console.log(board);
+            
+        }
+    }   
+})();
+
+renderGameBoard.render()

@@ -1,0 +1,11 @@
+.cell{
+    border: 1px solid red;
+    width: 30px;
+    height: 30px;
+    background-color: #252F2F;
+    
+}
+
+.cell--winner {
+    color: #416158
+}
