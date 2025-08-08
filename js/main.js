@@ -33,14 +33,11 @@ const gameController = () => {
         console.log(consoleBoard)
     }
 
-    const playRound = () => {
-        let row, column
-        while(!winner && rounds <= 9){
-            console.log("round: " + rounds);
-            console.log("Active Player is: " + getActivePlayer().getPlayerName());            
+    const playRound = (row, column) => {
+        if(!winner && rounds <= 9){
+            // console.log("round: " + rounds);
+            // console.log("Active Player is: " + getActivePlayer().getPlayerName());            
             printBoard();
-            row =  prompt("select row");
-            column = prompt("select column")
             board.setMark(row, column, getActivePlayer());
             rounds = rounds + 1;
             console.log("round done, checking winner");
@@ -59,22 +56,15 @@ const gameController = () => {
     const checkWinner = () => {
         if(
             //rows
-            compareCell(0,0,0,1,0,2)
-            ||
-            compareCell(1,0,1,1,1,2)
-            ||
-            compareCell(2,0,2,1,2,2)
-            ||
+            compareCell(0,0,0,1,0,2)            ||
+            compareCell(1,0,1,1,1,2)            ||
+            compareCell(2,0,2,1,2,2)            ||
             //columns
-            compareCell(0,0,1,0,2,0)
-            ||
-            compareCell(0,1,1,1,2,1)
-            ||
-            compareCell(0,2,1,2,2,2)
-            ||
+            compareCell(0,0,1,0,2,0)            ||
+            compareCell(0,1,1,1,2,1)            ||
+            compareCell(0,2,1,2,2,2)            ||
             //diagonals
-            compareCell(0,0,1,1,2,2)
-            ||
+            compareCell(0,0,1,1,2,2)            ||
             compareCell(2,0,1,1,2,0)
         ){
             winner = getActivePlayer()
@@ -84,35 +74,52 @@ const gameController = () => {
 
     return {
         playRound,
-        getActivePlayer, 
+        getActivePlayer,
         players
     }
 }
 
 const game = gameController();
 
-var renderGameBoard = (function(){
-    const cell = document.createElement("div");
-    cell.className = "cell";
 
-    const board = [];
 
-    return{
-        render: function(){
-            const gameBoard = document.querySelector("#gameboard");
-                for(let i=0; i<3; i++){
-                    board[i] = []
-                    for(let j=0; j<3; j++){
-                        board[i].push(cell);
-                        const clonedElement = cell.cloneNode(true);
-                        gameBoard.appendChild(clonedElement);
-                        console.log("appending");
-                }
-            }
-            console.log(board);
-            
-        }
-    }   
+var linkGameBoard = (function(){
+    const cell00 = document.querySelector('#\\30 0');
+    const cell01 = document.querySelector('#\\30 1');
+    const cell02 = document.querySelector('#\\30 2');
+    const cell10 = document.querySelector('#\\31 0');
+    const cell11 = document.querySelector('#\\31 1');
+    const cell12 = document.querySelector('#\\31 2');
+    const cell20 = document.querySelector('#\\32 0');
+    const cell21 = document.querySelector('#\\32 1');
+    const cell22 = document.querySelector('#\\32 2');
+
+    cell00.addEventListener("click",(e)=>playCell(e));
+    cell01.addEventListener("click",(e)=>playCell(e));
+    cell02.addEventListener("click",(e)=>playCell(e));
+    cell10.addEventListener("click",(e)=>playCell(e));
+    cell11.addEventListener("click",(e)=>playCell(e));
+    cell12.addEventListener("click",(e)=>playCell(e));
+    cell20.addEventListener("click",(e)=>playCell(e));
+    cell21.addEventListener("click",(e)=>playCell(e));
+    cell22.addEventListener("click",(e)=>playCell(e));
+
+    const playCell = (e) => {
+        const row = e.target.id[0];
+        const column = e.target.id[1];
+        e.target.innerHTML = game.getActivePlayer().getPlayerMark();
+        game.playRound(row, column);
+        interfaceController();
+        
+    }
 })();
 
-renderGameBoard.render()
+const interfaceController = (() => {
+    const playersTurn = document.querySelector("#players-turn");
+    const playersNameInfo = document.querySelector("#players-info");
+    const winnerPlayer = document.querySelector("#winner");
+
+    playersNameInfo.innerHTML = game.players[0].getPlayerName() +  " (X) vs " + game.players[1].getPlayerName() + " (O)"
+    playersTurn.innerHTML = game.getActivePlayer().getPlayerName()
+
+})()

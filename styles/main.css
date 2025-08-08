@@ -1,11 +1,48 @@
+#gameboard{
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+body{
+    background-color: #1C352D
+}
+
+.header{
+    background-color:  #A6B28B;
+}
+
+.contianer{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    
+}
+
 .cell{
     border: 1px solid red;
-    width: 30px;
-    height: 30px;
+    width: 90px;
+    height: 90px;
     background-color: #252F2F;
-    
+
 }
 
 .cell--winner {
     color: #416158
+}
+
+.player-info{
+    background-color: #F5C9B0;
+    width: 80%;
+}
+
+.gameboard-container{
+    width: 300px;
+    margin: 15px auto 200px auto;
+    color: #F9F6F3;
+    font-size: 48px;
+}
+
+#players-turn{
+
 }
